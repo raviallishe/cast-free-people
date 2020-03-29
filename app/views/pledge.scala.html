@@ -1,7 +1,40 @@
-@()
+@import models.PledgeData
 
-<!--@import helper-->
+@(pledgeForm: Form[PledgeData])(implicit messagesApi: Messages)
+
 
 @main("Login Page"){
-    @helpers.form
+    @helper.form(action = controllers.routes.PledgeController.savePledgeData) {
+        <h2 >Please Fill in the details</h2>
+
+        <div>
+            @helper.inputText(pledgeForm("name"), '_label -> "Name")
+        </div>
+
+        <div>
+            @helper.inputRadioGroup(pledgeForm("gender"), Seq("male" -> "Male", "female" -> "Female", "other" -> "Other"), '_label -> "Gender")
+        </div>
+
+        <div>
+            @helper.inputDate(pledgeForm("birthDate"), '_label -> "Birth Date")
+        </div>
+
+        <div>
+            @helper.select(
+            pledgeForm("state"),
+            options = List("Maharashtra" -> "Maharashtra", "Goa" -> "Goa", "Rajasthan" -> "Rajasthan"),
+            '_label -> "Your State",
+            'class -> "SelectBox ",
+            '_default -> "Select",
+            '_showConstraints -> false
+            )
+        </div>
+
+        <div>
+            @helper.checkbox(pledgeForm("legalTerms"), '_label -> "Legal Terms",'_text-> "I hear by agree to above details are correct and can be used", '_class->"Information_text", '_showConstraints->false)
+        </div>
+
+        <input type="submit" value="Submit"/>
+
+    }
 }

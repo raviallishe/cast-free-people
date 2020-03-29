@@ -19,6 +19,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
    * a path of `/`.
    */
   def home() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.home())
+    val user = request.getQueryString("name").getOrElse("User")
+    Ok(views.html.home(user))
   }
 }
